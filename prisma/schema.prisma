@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Device {
+  id                String    @id @default(cuid())
+  code              String    @unique
+  ownerType         String    // "Colegio Fontán", "Renting Fontán", "Asofontán"
+  responsibleId     String?
+  responsible       Responsible? @relation(fields: [responsibleId], references: [id], onDelete: SetNull)
+  observations      String?
+  isExternalRenting Boolean   @default(false)
+  rentingCompany    String?
+  returnDueDate     DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([code])
+  @@index([responsibleId])
+}
+
+model Responsible {
+  id                   String    @id @default(cuid())
+  name                 String
+  taller               String
+  associatedDocumentUrl String?
+  devices              Device[]
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  @@index([name])
+}
+
+model DeliveryReturnForm {
+  id        String   @id @default(cuid())
+  name      String
+  fileUrl   String
+  createdAt DateTime @default(now())
+
+  @@index([name])
+}
+
