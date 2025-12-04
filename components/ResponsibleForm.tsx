@@ -114,7 +114,7 @@ export default function ResponsibleForm({ responsible }: ResponsibleFormProps) {
 
       <div>
         <label htmlFor="taller" className="block text-sm font-medium text-gray-700 mb-2">
-          Taller <span className="text-red-500">*</span>
+          Taller
         </label>
         <input
           id="taller"
@@ -123,7 +123,6 @@ export default function ResponsibleForm({ responsible }: ResponsibleFormProps) {
           onChange={(e) => setFormData({ ...formData, taller: e.target.value })}
           className="input-field"
           placeholder="Grupo, taller o dependencia"
-          required
         />
       </div>
 

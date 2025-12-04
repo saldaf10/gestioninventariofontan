@@ -30,7 +30,7 @@ model Device {
 model Responsible {
   id                   String    @id @default(cuid())
   name                 String
-  taller               String
+  taller               String?
   associatedDocumentUrl String?
   devices              Device[]
   createdAt            DateTime  @default(now())

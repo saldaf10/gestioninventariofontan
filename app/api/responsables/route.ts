@@ -27,9 +27,9 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { name, taller, associatedDocumentUrl } = body
 
-    if (!name || !taller) {
+    if (!name) {
       return NextResponse.json(
-        { error: 'Nombre y taller son requeridos' },
+        { error: 'Nombre es requerido' },
         { status: 400 }
       )
     }
