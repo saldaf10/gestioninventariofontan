@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { Plus, FileText } from 'lucide-react'
 import ResponsibleActions from '@/components/ResponsibleActions'
 
+export const dynamic = 'force-dynamic'
+
 async function getResponsibles() {
   return await prisma.responsible.findMany({
     include: {
