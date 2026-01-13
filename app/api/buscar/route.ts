@@ -18,7 +18,8 @@ export async function GET(request: NextRequest) {
       const devices = await prisma.device.findMany({
         where: {
           code: {
-            contains: query.toUpperCase(),
+            contains: query,
+            mode: 'insensitive',
           },
         },
         include: {
@@ -31,22 +32,12 @@ export async function GET(request: NextRequest) {
 
       return NextResponse.json({ devices })
     } else if (type === 'responsible') {
-      // SQLite doesn't support case-insensitive mode, so we'll search case-sensitive
-      // but also try uppercase version for better results
       const responsibles = await prisma.responsible.findMany({
         where: {
-          OR: [
-            {
-              name: {
-                contains: query,
-              },
-            },
-            {
-              name: {
-                contains: query.toUpperCase(),
-              },
-            },
-          ],
+          name: {
+            contains: query,
+            mode: 'insensitive',
+          },
         },
         include: {
           devices: {
@@ -74,4 +65,3 @@ export async function GET(request: NextRequest) {
     )
   }
 }
-
